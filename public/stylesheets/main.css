@@ -1,0 +1,99 @@
+body {
+    background-color: #fff;
+    margin: 0;
+    padding: 0;
+    heigth: 100%;
+    font-family: arial;
+    font-size: 12px
+}
+html {
+    heigth: 100%
+}
+
+
+.main-box {
+    width: 900px;
+    margin: 0 auto;
+   /* border-left: 2px solid #6DA3BD;
+    border-right: 2px solid #6DA3BD;*/
+    padding: 10px;
+    height: 100%!important;
+    min-height:100%;
+    height:auto
+}
+
+.header .title {
+    float:left;
+    font-weight: bold;
+    text-transform: uppercase;
+    color:#000111;
+    text-shadow: 1px 1px 2px yellow;
+}
+.header .logout {
+    float:right;
+}
+.messages,
+.content {
+    clear: both;
+    position: relative;
+}
+.messages,
+#submitMessage {
+    padding: 10px 0;
+   /* border-top: 2px solid #6DA3BD;*/
+}
+#submitMessage label {
+    font-weight: bold;
+    display: block;
+    padding-bottom: 5px
+}
+#submitMessage textarea {
+    width: 99%
+}
+#submitMessage input[type=submit] {
+    float:right;
+    margin: 5px 0 0 0
+}
+#submitMessage .error {
+    float:left;
+    padding: 5px 0;
+    color:red;
+    font-size: 11px
+}
+.message,
+.pagination{
+    border-top: 1px solid #6DA3BD;
+    padding: 5px 0
+}
+.message .header .author {
+    display: block;
+    float:left;
+    margin: 0 5px 0 0;
+    font-weight: bold
+}
+.message .header .date {
+    display: block;
+    float:left;
+    font-style: italic;
+    color:gray
+}
+.message .content {
+    padding-top: 5px
+}
+.message p {
+    margin: 0;
+    padding: 0 0 5px 0
+}
+.vote a,
+.pagination a{
+    text-decoration: none;
+}
+.pagination {
+    text-align: center;
+}
+.pagination .prev{
+    float:left
+}
+.pagination .next{
+    float:right
+}

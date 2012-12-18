@@ -1,0 +1,79 @@
+#{extends 'main.html' /}
+#{set title:'Guest Book' /}
+
+#{form @GuestBook.postMessage(), id:'submitMessage'}
+    <label for="content">Message: </label>
+    <textarea name="content" id="content" class="tinymce"></textarea>
+    #{ifErrors}
+        <div class="error">This field is required!</div>
+    #{/ifErrors}
+    <div>
+        <input type="submit" value="Submit your message" />
+    </div>
+#{/form}
+
+<div class="messages">
+    #{list items:userMessages, as:'message'}
+    <div class="message">
+        <div class="header">
+            <div class="author">${message.author}</div>
+            <div class="date">${message.postedAt.format('dd.MM.yy HH:mm')}</div>
+        </div>
+        <div class="content">
+            ${message.content.raw()}
+        </div>
+        <div class="vote">
+            <a class="voteUp voteLink" href="@{GuestBook.voteUp(message.id)}">+</a> | <span class="rating">${message.rating}</span> | <a class="voteDown voteLink" href="@{GuestBook.voteDown(message.id)}">-</a>
+        </div>
+    </div>
+    #{/list}
+</div>
+
+*{<div class="pagination">
+    <a href="#" class="prev">Prev</a>
+    <a href="#" class="next">Next</a>
+</div>}*
+
+#{set 'moreScripts'}
+    <script type="text/javascript">
+        $(function() {
+            $('textarea.tinymce').tinymce({
+                script_url : '@{'/public/javascripts/tiny_mce/tiny_mce.js'}'
+            });
+
+            $('.voteLink').click(function(e) {
+                e.preventDefault();
+
+                var link = $(this);
+
+                if (link.hasClass('disabled')) {
+                    return;
+                }
+
+                var voteLinks = link.parent().find('.voteLink');
+                var ratingBox = link.parent().find('.rating');
+
+                voteLinks.addClass('disabled');
+
+                $.getJSON(link.attr('href'), function(data) {
+                    if (typeof data.success != 'undefined') {
+                        if (link.hasClass('voteUp')) {
+                            ratingBox.text(parseInt(ratingBox.text()) + 1);
+                        } else {
+                            ratingBox.text(parseInt(ratingBox.text()) - 1);
+                        }
+
+                        $.jGrowl(data.success);
+                    } else if(typeof data.error != 'undefined') {
+                        $.jGrowl(data.error);
+                    }
+
+                    voteLinks.removeClass('disabled');
+                })
+                .error(function() {
+                    voteLinks.removeClass('disabled');
+                });
+            });
+        });
+    </script>
+#{/set}
